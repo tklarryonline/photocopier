@@ -23,8 +23,17 @@ def run(src, dst):
 
         click.echo(f'# Inspecting {src_photos_dir}')
 
-        src_photos = os.listdir(src_photos_dir)
-        dst_photos = os.listdir(dst_photos_dir)
+        try:
+            src_photos = os.listdir(src_photos_dir)
+        except NotADirectoryError:
+            click.echo(f'> Skipped {src_photos_dir}')
+            continue
+
+        try:
+            dst_photos = os.listdir(dst_photos_dir)
+        except NotADirectoryError:
+            click.echo(f'> Skipped {dst_photos_dir}')
+            continue
 
         for photo in src_photos:
             if photo not in dst_photos:
